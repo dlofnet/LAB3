@@ -1,53 +1,68 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 public class StudentGrade {
     public static void main(String[] args) throws Exception {
 
-        // String name = ":Syng Kong Kwang";
-        // String program = ":BS Astronaut Subject";
-        // String course = ":IT101-2";
-
-        // String dummyNum = ":00.00";
-
-        // String pOrF = ":PASSED";
-
-        String name = ":" + JOptionPane.showInputDialog(null, "Student name: ");
-        String program = ":" + JOptionPane.showInputDialog(null, "program: ");
-        String course = ":" + JOptionPane.showInputDialog(null, "course: ");
+        //FINAL INPUT CODE----------------------------------------------------------------------------
+        String name = JOptionPane.showInputDialog(null, "Student name: ");
+        String program = JOptionPane.showInputDialog(null, "program: ");
+        String course = JOptionPane.showInputDialog(null, "course: ");
 
         float first = Float.valueOf(JOptionPane.showInputDialog(null, "First exam grade: "));
         float second = Float.valueOf(JOptionPane.showInputDialog(null, "Second exam grade: "));
         float third = Float.valueOf(JOptionPane.showInputDialog(null, "Third exam grade: "));
         float fourth = Float.valueOf(JOptionPane.showInputDialog(null, "Fourth exam grade: "));
 
-        String remarks = ":PASSED";
+        //DUMMY CODE---------------------------------------------------------------------------------
+        // String name = "Syng Kong Kwang";
+        // String program = "BS Astronaut Subject";
+        // String course = "IT101-2";
+
+        // float first = 99.87f;
+        // float second = 98.79f;
+        // float third = 99.99f;
+        // float fourth = 100.00f;
+
+        String remarks = "PASSED";
 
         float gradeAve = (first + second + third + fourth) / 4;
 
         if (gradeAve < 75) {
-            remarks = ":FAILED";
+            remarks = "FAILED";
         }
 
-        System.out.printf("%20s", name);
+        String hold = "Student's name\t:" + name + "\n";
+        hold += "Program\t:" + program + "\n";
+        hold += "Course \t:" + course + "\n\n";
+        hold += "Please input the grade for the following examinations: \n\n";
+        hold += "First\t:" + first + "\n";
+        hold += "Second\t:" + second + "\n";
+        hold += "Third\t:" + third + "\n";
+        hold += "Fourth\t:" + fourth + "\n";
+        hold += "---------------------------------------" + "\n";
+        hold += "Student's name\t:" + name + "\n";
+        hold += "Program\t:" + program + "\n";
+        hold += "Course \t:" + course + "\n\n";
+        hold += "1st\t2nd\t3rd\t4th\n";
+        hold += first + "\t" + second + "\t" + third + "\t" + fourth + "\t\n\n";
+        hold += "Average\t:" + gradeAve + "\n";
+        hold += "Remarks\t:" + remarks + "\n";
+        hold += "---------------------------------------";
 
-        JOptionPane.showMessageDialog(null, 
-        String.format("Student name %20s", name) + "\n" +
-        String.format("Program %35s", program) + "\n" +
-        String.format("Course %24s", course) + "\n\n" +
-        "Please input the grade for the following examinations: \n\n" +
-        String.format("First %20s", ":" + first) + "\n" +
-        String.format("Second %15s", ":" + second) + "\n" +
-        String.format("Third %19s", ":" + third) + "\n" +
-        String.format("Fourth %17s", ":" + fourth) + "\n" +
-        "---------------------------------------" + "\n" +
-        String.format("Student name %20s", name) + "\n" +
-        String.format("Program %35s", program) + "\n" +
-        String.format("Course %24s", course) + "\n\n" +
-        "1st        2nd        3rd        4th" + "\n" +
-        String.format(first + "%10s%10s%10s", second, third, fourth) + "\n\n" +
-        String.format("Average%20s", ":" + gradeAve) + "\n" +
-        String.format("Remarks%20s", remarks) + "\n" +
-        "----------------------------------------");
+        JOptionPane.showMessageDialog(null, new JTextArea(hold));
 
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("Student.txt"));
+            String student = "Name\t\t\t\tProgram\t\t\t\t\tCourse\t\tFirst\tSecond\tThird\tFourth\tAverage\t\tRemarks\n";
+            student += name + "\t\t" + program + "\t" + course + "\t\t" + first + "\t" + second + "\t" + third + "\t" + fourth + "\t" + gradeAve + "\t\t" + remarks;
+            writer.write(student);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
